@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+    <script src="passwordGenerator.js"></script>
+    <script src="jquery.passwordGenerator.js"></script>
+    <style>
+        .inner-addon {
+            position: relative;
+            max-width: 200px;
+        }
+
+        .inner-addon .fa {
+            position: absolute;
+            padding: 4px;
+        }
+
+        .left-addon .fa {
+            left: 0px;
+        }
+
+        .right-addon .fa {
+            right: 0px;
+        }
+
+        .left-addon input {
+            padding-left: 30px;
+        }
+
+        .right-addon input {
+            padding-right: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="password-box">
+    <script type="text/javascript">
+        $(function() {
+            $("#password-box").passwordbox();
+        })
+    </script>
+</body>
+
+</html>
