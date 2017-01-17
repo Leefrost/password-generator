@@ -1,6 +1,7 @@
 $.fn.passwordbox = function(options) {
     var settings = $.extend({
         length: 10,
+        onlyDigits: false
     }, options);
 
     var container = $('<div>', {
@@ -14,13 +15,13 @@ $.fn.passwordbox = function(options) {
     }));
 
     function generate() {
-        var generator = window.getPassword;
-        if (!generator) {
+        var passwordGenerator = window.getPassword;
+        if (!passwordGenerator) {
             throw new Error("Generator not found")
         }
 
-        var genPass = generator(settings.length, settings.memorable, settings.pattern, settings.prefix);
-        input.val(genPass);
+        var newPassword = passwordGenerator(settings.length, settings.onlyDigits);
+        input.val(newPassword);
     }
 
     $(document).on("click", ".btn-generate", generate);

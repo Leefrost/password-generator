@@ -1,41 +1,41 @@
-(function(root) {
+(function (root) {
 
     var charset = "";
     charset += "0123456789";
     charset += "abcdefghijklmnopqrstuvwxyz";
     charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var length = 10;
-    var getPassword, getGeneratorEntropy;
+
+    var defaultLength = 10;
     var localname = root.localPasswordGeneratorName || "getPassword";
 
-    getGeneratorEntropy = function () {
+    var getGeneratorEntropy = function () {
         var statistics;
-        var entropy = Math.log(charset.length) * length / Math.log(2);
+        var entropy = Math.log(charset.length) * defaultLength / Math.log(2);
         if (entropy < 70)
             statistics = entropy.toFixed(2);
         else if (entropy < 200)
             statistics = entropy.toFixed(1);
         else
             statistics = entropy.toFixed(0);
-    }
+    };
 
-    getPassword = function() {
+    var getPassword = function (opt) {
+
+        var options = $.extend({
+            length: defaultLength,
+            onlyDigits: false
+        }, opt);
+
+        if (options.onlyDigits) {
+            charset = "0123456789";
+        }
+
         var password = "";
-        var statistics = "";
-
-        for (var i = 0; i < length; i++)
+        for (var i = 0; i < options.length; i++)
             password += charset.charAt(randomInt(charset.length));
 
-        var entropy = Math.log(charset.length) * length / Math.log(2);
-        if (entropy < 70)
-            statistics = entropy.toFixed(2);
-        else if (entropy < 200)
-            statistics = entropy.toFixed(1);
-        else
-            statistics = entropy.toFixed(0);
-
         return password;
-    }
+    };
 
     function getMathRandomPos(n) {
         var x = Math.floor(Math.random() * n);
@@ -46,7 +46,7 @@
         if (typeof Uint32Array === "function" && "crypto" in root && "getRandomValues" in root.crypto) {
             var x = new Uint32Array(1);
             do root.crypto.getRandomValues(x);
-            while (x[0] - x[0] % n > 4294967296 - n)
+            while (x[0] - x[0] % n > 4294967296 - n);
             return x[0] % n;
         } else {
             return 0;
@@ -59,10 +59,10 @@
         return x;
     }
 
-    var container = ((typeof exports !== 'undefined') ? exports : root);
+    var container = typeof exports !== 'undefined' ? exports : root;
     container[localname] = getPassword;
-    if (typeof exports != 'undefined') {
-        if (typeof module != 'undefined' && module.exports) {
+    if (typeof exports !== 'undefined') {
+        if (typeof module !== 'undefined' && module.exports) {
             module.exports = getPassword;
         }
     }
